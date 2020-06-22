@@ -1,0 +1,57 @@
+﻿@model IEnumerable<StudentPortal.Models.Course>
+@using Microsoft.AspNet.Identity;
+
+
+@{
+    ViewBag.Title = "Courses Grades";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    string userId = ViewBag.StudentId.ToString();
+}
+
+
+
+<h2>Courses Grades</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayName("Semester 1")
+        </th>
+        <th>
+            @Html.DisplayName("Semester 2")
+        </th>
+        <th>
+            @Html.DisplayName("Final Grade")
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+
+        var firstSemesterGrade = item.CourseGrades.First(x => x.UserId == userId && x.Semester == StudentPortal.Models.Semester.One).Grade;
+        var secondSemesterGrade = item.CourseGrades.First(x => x.UserId == userId && x.Semester == StudentPortal.Models.Semester.Two).Grade;
+        var finalGrade = (firstSemesterGrade + secondSemesterGrade) / 2;
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.Name)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => firstSemesterGrade)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => secondSemesterGrade)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => finalGrade)
+    </td>
+    <td>
+        @Html.ActionLink("Add Grades", "AddGrades", new { courseId = item.Id,  studentId = userId})
+</tr>
+    }
+
+</table>
+
