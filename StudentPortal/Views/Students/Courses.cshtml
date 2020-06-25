@@ -6,7 +6,8 @@
     ViewBag.Title = "Courses";
     Layout = "~/Views/Shared/_Layout.cshtml";
     string userId = null;
-    if(ViewBag.StudentId != null){
+    if (ViewBag.StudentId != null)
+    {
         userId = ViewBag.StudentId.ToString();
     }
 
@@ -20,6 +21,9 @@
 <table class="table">
     <tr>
         <th>
+            @Html.DisplayNameFor(model => model.Year)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.Name)
         </th>
         <th></th>
@@ -29,7 +33,10 @@
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Name ) 
+                @Html.DisplayFor(modelItem => item.Year.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
             </td>
             <td>
                 @Html.ActionLink("Add Course", "AddCourse", new { courseId = item.Id, studentId = userId })

@@ -18,11 +18,11 @@
 @using (Html.BeginForm("AddGrades", "Students", new { courseId = Model.Id, studentId = studentId }, FormMethod.Post, new { @class = "aa-login-form" }))
 {
     @Html.AntiForgeryToken()
-    <label for="">First Semester<span>*</span></label>
-    <input name="First" type="text">
-    <label for="">Second Semester<span>*</span></label>
-    <input name="Second" type="text">
-    <button type="submit" class="aa-browse-btn">Login</button>
+    <label for="">First Semester<span></span></label>
+    <input type="number" min="1" max="10" step=".01" name="First" required>
+    <label for="">Second Semester<span></span></label>
+    <input type="number" min="1" max="10" step=".01" name="Second" required>
+    <button type="submit" class="aa-browse-btn">Add</button>
 }
 
 </table>

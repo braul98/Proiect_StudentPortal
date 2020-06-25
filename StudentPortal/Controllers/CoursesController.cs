@@ -39,7 +39,7 @@ namespace StudentPortal.Controllers
         // GET: Courses/Create
         public ActionResult Create()
         {
-            ViewBag.YearId = new SelectList(db.Years, "Id", "Id");
+            ViewBag.YearId = new SelectList(db.Years, "Id", "Name");
             return View();
         }
 
@@ -73,7 +73,7 @@ namespace StudentPortal.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.YearId = new SelectList(db.Years, "Id", "Id", course.YearId);
+            ViewBag.YearId = new SelectList(db.Years, "Id", "Name", course.YearId);
             return View(course);
         }
 
@@ -101,7 +101,7 @@ namespace StudentPortal.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Course course = db.Courses.Find(id);
+            Course course = db.Courses.Include(nameof(Course.Year)).FirstOrDefault(x => x.Id == id);
             if (course == null)
             {
                 return HttpNotFound();

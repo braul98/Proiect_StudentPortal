@@ -26,7 +26,7 @@ namespace StudentPortal.Controllers
         [HttpGet]
         public ActionResult CoursesGrades(string id)
         {
-            var courses = db.Courses.Include(nameof(Course.CourseGrades)).Where(x => x.CourseGrades.Select(c => c.UserId).Contains(id)).ToList();
+            var courses = db.Courses.Include(nameof(Course.CourseGrades)).Include(nameof(Course.Year)).Where(x => x.CourseGrades.Select(c => c.UserId).Contains(id)).ToList();
 
             ViewBag.StudentId = id;
             return View(courses.ToList());
@@ -35,7 +35,8 @@ namespace StudentPortal.Controllers
         [HttpGet]
         public ActionResult Courses(string id)
         {
-            var courses = db.Courses.Where(x => x.CourseGrades.Select(c => c.UserId).Contains(id) == false);
+            var student = db.Users.First(x => x.Id == id);
+            var courses = db.Courses.Include(nameof(Course.Year)).Where(x => x.CourseGrades.Select(c => c.UserId).Contains(id) == false).OrderBy(x => x.Year.Name);
             ViewBag.StudentId = id;
             return View(courses.ToList());
         }
@@ -63,7 +64,7 @@ namespace StudentPortal.Controllers
             };
             db.CourseGrades.AddRange(grades);
             db.SaveChanges();
-            return RedirectToAction("Courses");
+            return RedirectToAction("CoursesGrades", new {id = studentId });
         }
 
         [HttpGet]
@@ -92,8 +93,21 @@ namespace StudentPortal.Controllers
             db.Entry(secondSemesterGrade).State = EntityState.Modified;
             db.SaveChanges();
 
-            return RedirectToAction("Courses");
+            return RedirectToAction("CoursesGrades", new { id = studentId});
 
+        }
+
+        public ActionResult ViewGrades()
+        {
+            var userId = User.Identity.GetUserId();
+            var student = db.Users.First(x => x.Id == userId);
+
+            var courses = db.Courses.Include(nameof(Course.CourseGrades)).Include(nameof(Course.Year)).Where(x => x.CourseGrades.Select(c => c.UserId).Contains(userId)).ToList().OrderBy(x => x.Year);
+
+
+            ViewBag.StudentId = userId;
+
+            return View(courses);
         }
     }
 

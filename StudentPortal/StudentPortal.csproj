@@ -187,6 +187,10 @@
     <Compile Include="Migrations\202006211816216_SecondMigration.designer.cs">
       <DependentUpon>202006211816216_SecondMigration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202006251742058_MadeNameRequired.cs" />
+    <Compile Include="Migrations\202006251742058_MadeNameRequired.designer.cs">
+      <DependentUpon>202006251742058_MadeNameRequired.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Course.cs" />
@@ -370,6 +374,7 @@
     <Content Include="Views\Students\CoursesGrades.cshtml" />
     <Content Include="Views\Students\Courses.cshtml" />
     <Content Include="Views\Students\AddGrades.cshtml" />
+    <Content Include="Views\Students\ViewGrades.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -391,6 +396,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202006211816216_SecondMigration.resx">
       <DependentUpon>202006211816216_SecondMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202006251742058_MadeNameRequired.resx">
+      <DependentUpon>202006251742058_MadeNameRequired.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
